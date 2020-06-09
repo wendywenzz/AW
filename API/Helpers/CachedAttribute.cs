@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Interfaces;
+using Interface.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

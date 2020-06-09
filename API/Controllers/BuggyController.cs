@@ -1,4 +1,4 @@
-using API.Errors;
+using Core.Core;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,22 +20,21 @@ namespace API.Controllers
             return "secret stuff";
         }
 
+        [HttpGet("test")]
+        public ActionResult<string> GetSecretTextTest()
+        {
+            return "secret stuff";
+        }
+
         [HttpGet("notfound")]
         public ActionResult GetNotFoundRequest()
         {
-            var thing = _context.Products.Find(42);
-            if (thing == null)
-            {
-                return NotFound(new ApiResponse(404));
-            }
-            return Ok();
-        }
+            return NotFound(new ApiResponse(404));
+        } 
 
         [HttpGet("servererror")]
         public ActionResult GetServerError()
         {
-            var thing = _context.Products.Find(42);
-            var thingsToReturn = thing.ToString();
             return Ok();
         }
 

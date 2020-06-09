@@ -1,20 +1,14 @@
-using System.Linq;
-using API.Errors;
 using API.Extensions;
 using API.Helpers;
 using API.Middleware;
 using AutoMapper;
-using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 
 namespace API
@@ -34,11 +28,11 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(x =>
-                x.UseSqlite(_config.GetConnectionString("DefaultConnection")));
+                x.UseNpgsql(_config.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<AppIdentityDbContext>(x =>
             {
-                x.UseSqlite(_config.GetConnectionString("IdentityConnection"));
+                x.UseNpgsql(_config.GetConnectionString("IdentityConnection"));
             });
 
             services.AddSingleton<IConnectionMultiplexer>(c =>
@@ -54,7 +48,7 @@ namespace API
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                 });
             });
         }
@@ -75,6 +69,7 @@ namespace API
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseSwaggerDocumentation();

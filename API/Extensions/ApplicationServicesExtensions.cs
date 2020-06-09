@@ -1,8 +1,9 @@
 using System.Linq;
-using API.Errors;
-using Core.Interfaces;
+using BusinessService.Core;
+using Core.Core;
 using Infrastructure.Data;
-using Infrastructure.Services;
+using Infrastructure.Repository;
+using Interface.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,12 +16,15 @@ namespace API.Extensions
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
 
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
+            services.
+                    AddMvc(o => o.Conventions.Add(
+                        new GenericControllerRouteConvention()
+                    )).
+                    ConfigureApplicationPartManager(m =>
+                        m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider()
+                    ));
 
             services.Configure<ApiBehaviorOptions>(options =>
             {

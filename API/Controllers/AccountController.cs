@@ -1,12 +1,12 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using API.Dtos;
-using API.Errors;
 using API.Extensions;
 using AutoMapper;
+using Core.Core;
+using Core.Dtos;
 using Core.Entities.Identity;
-using Core.Interfaces;
+using Interface.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
