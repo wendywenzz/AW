@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
+using System;
 
 namespace API
 {
@@ -68,6 +69,8 @@ namespace API
 
             app.UseCors("CorsPolicy");
 
+            app.UseMigrations(_config);
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -79,5 +82,6 @@ namespace API
                 endpoints.MapControllers();
             });
         }
+
     }
 }
