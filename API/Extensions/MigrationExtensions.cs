@@ -14,8 +14,7 @@ namespace API.Extensions
     {
         public static IApplicationBuilder UseMigrations(this IApplicationBuilder app, IConfiguration config)
         {
-
-            bool useMigration = Convert.ToBoolean(config.GetSection("ConnectionStrings:EnabledMigrations"));
+            bool useMigration = Convert.ToBoolean(config.GetSection("ConnectionStrings:EnabledMigrations").Value);
             if (useMigration)
             {
                 using (var serviceScope = app.ApplicationServices

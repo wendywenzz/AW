@@ -69,7 +69,7 @@ namespace API
 
             app.UseCors("CorsPolicy");
 
-            app.UseMigrations(_config);
+            //app.UseMigrations(_config);
 
             app.UseAuthentication();
 
